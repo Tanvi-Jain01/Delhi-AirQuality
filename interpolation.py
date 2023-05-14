@@ -83,9 +83,9 @@ X_test = X_test[['datetime','latitude','longitude','PM2.5']]
 
 
 import subprocess
-#package_url = "https://pypi.nvidia.com/cuml/cuml_cu11-<version>.tar.gz"
-#package_file = wget.download(package_url)
-#subprocess.call(["pip", "install", package_file])
+package_url = "https://pypi.nvidia.com/cuml/cuml_cu11-<version>.tar.gz"
+package_file = wget.download(package_url)
+subprocess.call(["pip", "install", package_file])
 
 from cuml.neighbors import KNeighborsRegressor
 from time import time
