@@ -25,7 +25,10 @@ ds = xr.open_dataset(nc_url)
 st.write(ds)
 
 
-
+df = ds.to_dataframe().reset_index().set_index("time")
+df = df["2022-01-01": "2022-12-31"]
+print(type(df))
+df["datetime"] = df.index
 
 
 
