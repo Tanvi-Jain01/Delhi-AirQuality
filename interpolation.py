@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy.interpolate import NearestNDInterpolator
+#from scipy.interpolate import NearestNDInterpolator
 import xarray as xr
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
