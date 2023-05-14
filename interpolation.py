@@ -53,6 +53,7 @@ st.write('After Removing NAN values from Dataset we have',len(uniquestations),'u
 
 st.dataframe(df)
 
+st.write('After Interpolation')
 df = df.ffill().bfill()
 st.dataframe(df)
 
