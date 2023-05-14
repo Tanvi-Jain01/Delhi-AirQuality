@@ -130,7 +130,7 @@ for i,j in enumerate(test_time_df.groups.keys()):
   predn_list.append(predns)
 
   
- predict = pd.concat([pd.DataFrame(predn) for predn in predn_list], ignore_index=True)
+predict = pd.concat([pd.DataFrame(predn) for predn in predn_list], ignore_index=True)
 test_time_df = predict.rename(columns={0: "pred_y"})
 test_time_df["true_y"] = X_test["PM2.5"].reset_index(drop=True)
 
