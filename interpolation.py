@@ -36,8 +36,9 @@ st.write(type(ds))
 df = ds.to_dataframe().reset_index().set_index("time")
 
 df["datetime"] = df.index
+#df = df["2022-01-01": "2022-12-31"]
 
-df = df["2022-01-01": "2022-12-31"]
+
 print(type(df))
 st.dataframe(df)
 
