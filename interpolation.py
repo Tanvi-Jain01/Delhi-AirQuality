@@ -140,7 +140,7 @@ test_time_df["true_y"] = X_test["PM2.5"].reset_index(drop=True)
 test_time_df["RMSE"] = np.sqrt(mean_squared_error(test_time_df["true_y"], test_time_df["pred_y"]))
 
 test_time_df["RMSE"].plot(figsize=(20, 7), grid=True)
-print(test_time_df)  
+st.dataframe(test_time_df)  
   
   
 st.write("Hello")
