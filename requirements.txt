@@ -23,4 +23,5 @@ netcdf4
 h5netcdf
 plotly
 wget
-
+cuml
+cuda
