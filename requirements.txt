@@ -26,4 +26,5 @@ wget
 requests
 io
 time
-cuml-cu11 --extra-index-url=https://pypi.nvidia.com
+cuml-cu110
+#cuml-cu11 --extra-index-url=https://pypi.nvidia.com
