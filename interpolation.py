@@ -59,7 +59,7 @@ st.dataframe(df)
 
 import plotly.express as px
 fig = px.scatter_mapbox(df, lat="latitude", lon="longitude", hover_name=df["station"],
-                        zoom=8, height=500, color='blue')
+                        zoom=8, height=500, color='PM2.5')
 fig.update_layout(mapbox_style="open-street-map", title="Delhi Air Station", selector=dict(mode='markers'))
 #fig.show()
 st.plotly_chart(fig)
