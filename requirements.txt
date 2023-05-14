@@ -23,8 +23,6 @@ netcdf4
 h5netcdf
 plotly
 wget
-#cuml
+
 time
-#cuml-cu11
-#!pip install cuml-cu11 --extra-index-url=https://pypi.nvidia.com
 #cuml-cu11 --extra-index-url=https://pypi.nvidia.com
