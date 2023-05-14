@@ -23,6 +23,6 @@ netcdf4
 h5netcdf
 plotly
 wget
-#subprocess
-nvidia-pyindex
-nvidia-cuml-cu11
+subprocess
+#nvidia-pyindex
+#nvidia-cuml-cu11
