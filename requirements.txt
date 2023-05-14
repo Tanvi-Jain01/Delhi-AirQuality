@@ -25,4 +25,5 @@ plotly
 wget
 #cuml
 time
-!pip install cuml-cu11 --extra-index-url=https://pypi.nvidia.com
+#!pip install cuml-cu11 --extra-index-url=https://pypi.nvidia.com
+cuml-cu11 --extra-index-url=https://pypi.nvidia.com
