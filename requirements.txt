@@ -5,3 +5,4 @@ numpy==1.21.3
 wget
 xarray
 altair==4.1.0
+dask==2021.9.1
