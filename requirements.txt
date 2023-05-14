@@ -26,7 +26,7 @@ wget
 
 #cuml-cu11 --extra-index-url=https://pypi.nvidia.com
 
-cuml-cu11
+#cuml-cu11
 
 #cuml
 #cuda
