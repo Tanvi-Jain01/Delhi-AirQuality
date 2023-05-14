@@ -19,7 +19,7 @@ import dask.array as da
 #nc_url = 'https://github.com/patel-zeel/delhi_aq/raw/main/data/delhi_cpcb_2022.nc'
 
 
-import wget as wget
+import wget
 
 # Download dataset file from GitHub
 dataset_url = "https://github.com/patel-zeel/delhi_aq/raw/main/data/delhi_cpcb_2022.nc"
