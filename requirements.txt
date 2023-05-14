@@ -8,3 +8,5 @@ altair==4.1.0
 dask==2021.9.1
 netcdf4
 h5netcdf
+requests
+io
