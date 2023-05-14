@@ -4,3 +4,4 @@ matplotlib==3.4.3
 numpy==1.21.3
 wget
 xarray
+altair==4.1.0
