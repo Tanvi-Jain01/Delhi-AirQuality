@@ -26,8 +26,10 @@ wget
 
 #cuml-cu11 --extra-index-url=https://pypi.nvidia.com
 
-cuml
-cuda
+cuml-cu11
+
+#cuml
+#cuda
 
 #cubinlinker-cu11-0.3.0.post1
 #cuda-python-11.8.1
