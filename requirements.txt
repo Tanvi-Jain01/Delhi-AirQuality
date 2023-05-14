@@ -23,8 +23,10 @@ netcdf4
 h5netcdf
 plotly
 wget
-requests
-io
+#requests
+#io
 time
-cuml-cu110
+#cuml-cu110
+git+https://github.com/rapidsai/cuml-cu11.git
+
 #cuml-cu11 --extra-index-url=https://pypi.nvidia.com
