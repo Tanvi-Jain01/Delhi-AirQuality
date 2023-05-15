@@ -87,65 +87,56 @@ package_url = "https://pypi.nvidia.com/cuml/cuml_cu11-<version>.tar.gz"
 package_file = wget.download(package_url)
 subprocess.call(["pip", "install", package_file])
 
-from cuml.neighbors import KNeighborsRegressor
-from time import time
-from sklearn.model_selection import GridSearchCV
-# from sklearn.neighbors import KNeighborsRegressor
+
 from sklearn.metrics import mean_squared_error
+from sklearn.neighbors import KNeighborsRegressor
 
+# Load your data (replace with your own data loading code)
+# X_train, X_test, y_train, y_test = load_data()
 
-
-
-
-gs= KNeighborsRegressor(n_neighbors=12)
-
-
-# Train a model for each time step
-init = time()
-model_list=[]
-def fit_model(x,model_list):    
-    X, y = x.iloc[:,1:-1],x.iloc[:,-1]
-    # print(X)
+# Function to fit the model
+def fit_model(x):
+    X, y = x.iloc[:, 1:-1], x.iloc[:, -1]
     model = gs.fit(X, y)
-    #model = gs.fit(X, y).best_estimator_
-    model_list.append(model)
     return model
 
-# Group train data by datetime and apply fit_model function
-train_time_df = X_train.groupby("datetime")
-model = train_time_df.apply(fit_model,model_list=model_list)
-print(train_time_df)
-print(f"Training finished in {time() - init:.2f} seconds")
+# Add Streamlit sidebar widgets for parameter selection
+k = st.sidebar.slider('k', min_value=1, max_value=15, value=5)
+distance_metric = st.sidebar.selectbox('Distance Metric', ['euclidean', 'manhattan'])
+algorithm = st.sidebar.radio('Algorithm', ['auto', 'ball_tree', 'kd_tree', 'brute'])
 
+# Create a button to run the algorithm
+run_button = st.sidebar.button("Run Algorithm")
 
-# Predict for each time step
-def predict_model(x,model):
-    # model = x.iloc[0]  # Get the model from the groupby result
-    return model.predict(x[:,1:])
+if run_button:
+    # Train the model with selected parameters
+    gs = KNeighborsRegressor(n_neighbors=k, metric=distance_metric, algorithm=algorithm)
+    
+    model_list = []
+    train_time_df = X_train.groupby("datetime")
+    model = train_time_df.apply(fit_model)
+    model_list.extend(model)
+    
+    predn_list = []
+    test_time_df = X_test.groupby("datetime")
+    
+    # Predict using the trained model for each time step
+    for i, j in enumerate(test_time_df.groups.keys()):
+        group_a = test_time_df.get_group(j)
+        predns = model_list[i].predict(group_a.iloc[:, 1:-1])
+        predn_list.append(predns)
+    
+    # Calculate RMSE
+    predict = pd.concat([pd.DataFrame(predn) for predn in predn_list], ignore_index=True)
+    test_time_df = predict.rename(columns={0: "pred_y"})
+    test_time_df["true_y"] = X_test["PM2.5"].reset_index(drop=True)
+    
+    # Compute RMSE for each time step
+    rmse = mean_squared_error(test_time_df["true_y"], np.concatenate(predn_list)) ** 0.5
+    
+    # Display RMSE value
+    st.write(f"RMSE for k={k}: {rmse}")
 
-# Group test data by datetime and apply predict_model function
-
-test_time_df = X_test.groupby("datetime")
-predn_list=[]
-for i,j in enumerate(test_time_df.groups.keys()):
-  # test_time_df.dtype
-  group_a = test_time_df.get_group(j)
-  print(group_a)
-  predns = model_list[i].predict(group_a.iloc[:,1:-1])
-  predn_list.append(predns)
-
-  
-predict = pd.concat([pd.DataFrame(predn) for predn in predn_list], ignore_index=True)
-test_time_df = predict.rename(columns={0: "pred_y"})
-test_time_df["true_y"] = X_test["PM2.5"].reset_index(drop=True)
-
-
-
-# Compute RMSE for each time step
-test_time_df["RMSE"] = np.sqrt(mean_squared_error(test_time_df["true_y"], test_time_df["pred_y"]))
-
-test_time_df["RMSE"].plot(figsize=(20, 7), grid=True)
-st.dataframe(test_time_df)  
   
   
 st.write("Hello")
