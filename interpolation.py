@@ -29,7 +29,7 @@ dataset_file = wget.download(dataset_url)
 ds = xr.open_dataset(dataset_file)
 
 # Display the dataset
-#st.write(type(ds))
+st.write(type(ds))
 
 
 df = ds.to_dataframe().reset_index().set_index("time")
@@ -38,7 +38,7 @@ df["datetime"] = df.index
 #df = df["2022-01-01": "2022-12-31"]
 
 
-#print(type(df))
+print(type(df))
 st.write("Dataset of Air Quality - Delhi")
 
 uniquestations = df.station.unique()
