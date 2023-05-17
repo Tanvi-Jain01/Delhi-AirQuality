@@ -32,29 +32,124 @@ ds = xr.open_dataset(dataset_file)
 st.write(type(ds))
 
 
-df = ds.to_dataframe().reset_index().set_index("time")
+lat = ds['latitude']
+lon = ds['longitude']
 
-df["datetime"] = df.index
-#df = df["2022-01-01": "2022-12-31"]
+# Create a DataFrame
+df = ds.to_dataframe().reset_index()
+print(df)
+
+df['Date'] = pd.to_datetime(df['Date'])
+print(df['Date'].dtype)
+
+df['Date'] = df['Date'].dt.date
+#print(df['Date'])
+df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
+print(df['Date'])
 
 
-print(type(df))
-st.write("Dataset of Air Quality - Delhi")
+daily_mean=pd.DataFrame()
 
-uniquestations = df.station.unique()
-st.write('There are',len(uniquestations),'Unique station')
+#daily_mean= df.groupby(['station', 'Date','latitude','longitude'])['PM2.5'].mean().reset_index()
+
+daily_mean = df.groupby(['station', 'Date', 'latitude', 'longitude']).mean().reset_index()
+print(daily_mean.columns)
+
+daily_mean=daily_mean[['station', 'Date', 'latitude', 'longitude','WS','WD','AT','RF','TOT-RF','PM2.5']]
+type(daily_mean)
+print(daily_mean)
+
+
+df = df[df['Date'].dt.year != 2023]
+df.shape, df
 
 dropped=df=df.dropna(subset=["PM2.5"])
 
-uniquestations = df.station.unique()
-st.write('After Removing NAN values from Dataset we have',len(uniquestations),'unique stations of Delhi')
+df['date_index']=df['Date']
+print(df.columns)
+df.set_index('date_index')
 
 
-st.dataframe(df)
 
-st.write('After Interpolation')
-df = df.ffill().bfill()
-st.dataframe(df)
+unique=df[['station','latitude','longitude']].drop_duplicates()
+print(unique)
+print(len(unique))
+type(unique)
+
+
+
+lat = unique['latitude']
+lon = unique['longitude']
+
+geometry = [Point(x, y) for x, y in zip(lon, lat)]
+stationgeo=gpd.GeoDataFrame(unique,geometry=geometry)
+print(stationgeo)
+type(stationgeo)
+
+
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Plot the GeoDataFrame
+stationgeo.plot(ax=ax,color='red')
+
+# Show the plot
+plt.show()
+
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+# Read the shapefile
+shapefile_path = '/content/drive/MyDrive/Delhi/Districts.shp'
+gdf_shape = gpd.read_file(shapefile_path)
+
+# Convert DataFrame to GeoDataFrame
+#gdf_data = gpd.GeoDataFrame(unique, geometry=gpd.points_from_xy(unique.longitude, unique.latitude))
+
+gdf_data = gpd.GeoDataFrame(unique, geometry=geometry)
+
+# Set the CRS of the GeoDataFrame to match the shapefile
+gdf_data.crs = gdf_shape.crs
+
+# Plot the shapefile
+fig, ax = plt.subplots(figsize=(10, 10))
+gdf_shape.boundary.plot(ax=ax,edgecolor='black')
+
+# Plot the data points on top of the shapefile
+gdf_data.plot(ax=ax, color='red', markersize=20, label='Air Stations')
+ax.legend()
+plt.title('Delhi Air Stations')
+# Show the plot
+plt.show()
+st.pyplot(fig)
+
+
+all_stations = df.station.unique()
+train_station, test_station = train_test_split(all_stations, test_size=0.2, random_state=42)
+X_train = df[df.station.isin(train_station)]
+X_test = df[df.station.isin(test_station)]
+
+
+df = df.fillna(method='ffill')
+df = df.fillna(method='bfill')
+
+
+
+
+X_train = X_train[['Date','latitude','longitude','WS', 'WD', 'AT', 'RF','TOT-RF','PM2.5']]
+X_test = X_test[['Date','latitude','longitude','WS', 'WD', 'AT', 'RF','TOT-RF','PM2.5']]
+
+
+
+
+
+
+
+
+df['Date'] = pd.to_datetime(df['time'])
+print(df)
+print(df.describe())
+
 
 
 import plotly.express as px
@@ -64,35 +159,12 @@ fig.update_layout(mapbox_style="open-street-map", title="Delhi Air Stations")
 #fig.show()
 st.plotly_chart(fig)
 
-df['time_']=df['datetime']
 
 
-#TrainTest Split
-all_stations = df.station.unique()
-train_station, test_station = train_test_split(all_stations, test_size=0.2, random_state=42)
-X_train = df[df.station.isin(train_station)]
-X_test = df[df.station.isin(test_station)]
-
-#X_train.station.unique().shape, X_test.shape
-
-
-df.set_index("time_")
-X_train = X_train[['datetime','latitude','longitude','PM2.5']]
-X_test = X_test[['datetime','latitude','longitude','PM2.5']]
-
-
-
-#import subprocess
-#package_url = "https://pypi.nvidia.com/cuml/cuml_cu11-<version>.tar.gz"
-#package_file = wget.download(package_url)
-#subprocess.call(["pip", "install", package_file])
 
 
 from sklearn.metrics import mean_squared_error
 from sklearn.neighbors import KNeighborsRegressor
-
-# Load your data (replace with your own data loading code)
-# X_train, X_test, y_train, y_test = load_data()
 
 # Function to fit the model
 def fit_model(x):
@@ -139,4 +211,4 @@ if run_button:
 
   
   
-st.write("Hello")
+
