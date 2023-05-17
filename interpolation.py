@@ -37,15 +37,15 @@ lon = ds['longitude']
 
 # Create a DataFrame
 df = ds.to_dataframe().reset_index()
-print(df)
+#print(df)
 
-df['Date'] = pd.to_datetime(df['Datetime'])
-print(df['Date'].dtype)
+df['Date'] = pd.to_datetime(df['Date'])
+#print(df['Date'].dtype)
 
 df['Date'] = df['Date'].dt.date
 #print(df['Date'])
 df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
-print(df['Date'])
+#print(df['Date'])
 
 
 daily_mean=pd.DataFrame()
