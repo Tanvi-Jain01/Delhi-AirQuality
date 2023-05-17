@@ -29,7 +29,7 @@ dataset_file = wget.download(dataset_url)
 ds = xr.open_dataset(dataset_file)
 
 # Display the dataset
-st.write(type(ds))
+#st.write(type(ds))
 
 
 lat = ds['latitude']
@@ -39,7 +39,7 @@ lon = ds['longitude']
 df = ds.to_dataframe().reset_index()
 print(df)
 
-df['Date'] = pd.to_datetime(df['Date'])
+df['Date'] = pd.to_datetime(df['Datetime'])
 print(df['Date'].dtype)
 
 df['Date'] = df['Date'].dt.date
