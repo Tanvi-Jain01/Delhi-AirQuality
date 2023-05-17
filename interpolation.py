@@ -32,8 +32,6 @@ ds = xr.open_dataset(dataset_file)
 
 
 
-#lat = df['latitude']
-#lon = df['longitude']
 
 # Create a DataFrame
 df = ds.to_dataframe().reset_index()
@@ -70,17 +68,30 @@ print(df.columns)
 df.set_index('date_index')
 
 
+daily_mean=pd.DataFrame()
+
+#daily_mean= df.groupby(['station', 'Date','latitude','longitude'])['PM2.5'].mean().reset_index()
+
+daily_mean = df.groupby(['station', 'Date', 'latitude', 'longitude']).mean().reset_index()
+print(daily_mean.columns)
+
+daily_mean=daily_mean[['station', 'Date', 'latitude', 'longitude','WS','WD','AT','RF','TOT-RF','PM2.5']]
+type(daily_mean)
+#print(daily_mean)
+
+df=daily_mean
 
 unique=df[['station','latitude','longitude']].drop_duplicates()
 #print(unique)
 #print(len(unique))
-type(unique)
+#type(unique)
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
 lat = df['latitude']
 lon = df['longitude']
+
 
 geometry = [Point(x, y) for x, y in zip(lon, lat)]
 stationgeo=gpd.GeoDataFrame(unique,geometry=geometry)
