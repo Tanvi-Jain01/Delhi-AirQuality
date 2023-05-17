@@ -29,7 +29,7 @@ dataset_file = wget.download(dataset_url)
 ds = xr.open_dataset(dataset_file)
 
 # Display the dataset
-#st.write(type(ds))
+
 
 
 lat = ds['latitude']
@@ -98,7 +98,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 
 # Read the shapefile
-shapefile_path = '/content/drive/MyDrive/Delhi/Districts.shp'
+shapefile_path = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp'
 gdf_shape = gpd.read_file(shapefile_path)
 
 # Convert DataFrame to GeoDataFrame
