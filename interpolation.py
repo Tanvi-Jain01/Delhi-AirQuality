@@ -32,8 +32,8 @@ ds = xr.open_dataset(dataset_file)
 
 
 
-lat = df['latitude']
-lon = df['longitude']
+#lat = df['latitude']
+#lon = df['longitude']
 
 # Create a DataFrame
 df = ds.to_dataframe().reset_index()
@@ -57,7 +57,7 @@ print(daily_mean.columns)
 
 daily_mean=daily_mean[['station', 'Date', 'latitude', 'longitude','WS','WD','AT','RF','TOT-RF','PM2.5']]
 type(daily_mean)
-print(daily_mean)
+#print(daily_mean)
 
 
 df = df[df['Date'].dt.year != 2023]
