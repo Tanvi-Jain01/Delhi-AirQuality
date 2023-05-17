@@ -39,7 +39,7 @@ lon = ds['longitude']
 df = ds.to_dataframe().reset_index()
 #print(df)
 
-df['Date'] = pd.to_datetime(df['Date'])
+df['Date'] = pd.to_datetime(df['time'])
 #print(df['Date'].dtype)
 
 df['Date'] = df['Date'].dt.date
@@ -73,7 +73,7 @@ df.set_index('date_index')
 
 unique=df[['station','latitude','longitude']].drop_duplicates()
 print(unique)
-print(len(unique))
+#print(len(unique))
 type(unique)
 
 
@@ -83,8 +83,8 @@ lon = unique['longitude']
 
 geometry = [Point(x, y) for x, y in zip(lon, lat)]
 stationgeo=gpd.GeoDataFrame(unique,geometry=geometry)
-print(stationgeo)
-type(stationgeo)
+#print(stationgeo)
+#type(stationgeo)
 
 
 fig, ax = plt.subplots(figsize=(8, 8))
