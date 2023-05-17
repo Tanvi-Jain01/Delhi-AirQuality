@@ -24,7 +24,7 @@ h5netcdf
 plotly
 wget
 geopandas
-
+shapely
 #cuml-cu11 --extra-index-url=https://pypi.nvidia.com
 
 #cuml-cu11
