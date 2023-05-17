@@ -23,7 +23,7 @@ netcdf4
 h5netcdf
 plotly
 wget
-
+geopandas
 #cuml-cu11 --extra-index-url=https://pypi.nvidia.com
 
 #cuml-cu11
