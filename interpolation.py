@@ -32,8 +32,8 @@ ds = xr.open_dataset(dataset_file)
 
 
 
-lat = ds['latitude']
-lon = ds['longitude']
+lat = df['latitude']
+lon = df['longitude']
 
 # Create a DataFrame
 df = ds.to_dataframe().reset_index()
@@ -78,6 +78,9 @@ type(unique)
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
+
+lat = df['latitude']
+lon = df['longitude']
 
 geometry = [Point(x, y) for x, y in zip(lon, lat)]
 stationgeo=gpd.GeoDataFrame(unique,geometry=geometry)
