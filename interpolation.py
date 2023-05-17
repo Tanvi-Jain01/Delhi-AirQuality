@@ -171,6 +171,7 @@ def fit_model(x):
     return model
 
 # Add Streamlit sidebar widgets for parameter selection
+selected_date = st.sidebar.date_input("Select Date")
 k = st.sidebar.slider('k', min_value=1, max_value=15, value=5)
 distance_metric = st.sidebar.selectbox('Distance Metric', ['euclidean', 'manhattan'])
 algorithm = st.sidebar.radio('Algorithm', ['auto', 'ball_tree', 'kd_tree', 'brute'])
