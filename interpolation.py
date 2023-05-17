@@ -89,8 +89,8 @@ unique=df[['station','latitude','longitude']].drop_duplicates()
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
-lat = df['latitude']
-lon = df['longitude']
+lat = df['latitude'].drop_duplicates()
+lon = df['longitude'].drop_duplicates()
 
 
 geometry = [Point(x, y) for x, y in zip(lon, lat)]
