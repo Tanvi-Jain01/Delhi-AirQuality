@@ -120,8 +120,20 @@ plt.show()
 
 #gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
 #gdf_shape = gpd.read_file(gdf_shape)
-shapefile_path = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp'
-gdf_shape = gpd.read_file(shapefile_path)
+#shapefile_path = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp'
+#gdf_shape = gpd.read_file(shapefile_path)
+
+import geopandas as gpd
+
+# Download the shapefile from the GitHub repository to a local file
+shapefile_url = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/raw/main/Districts.shp'
+local_file_path = 'Districts.shp'
+gpd.io.file.fiona.dl_url(shapefile_url, local_file_path)
+
+# Read the shapefile from the local file
+gdf_shape = gpd.read_file(local_file_path)
+
+
 """
 print(gdf_shape.head())
 # Plot the shapefile
@@ -348,8 +360,8 @@ if st.sidebar.button('Run Algorithm'):
     contour = ax.contourf(lon_grid,lat_grid, testing['PM2.5'].values.reshape(lon_grid.shape), cmap='coolwarm', levels=200)
 
  # Add the shapefile to the plot
-    delhi_shapefile.plot(ax=ax, edgecolor='black', facecolor='none')
-
+    #delhi_shapefile.plot(ax=ax, edgecolor='black', facecolor='none')
+    gdf_shape.plot(ax=ax, edgecolor='black', facecolor='none')
  # Plot the grid points
  #grid_points.plot(ax=ax, marker='o', color='grey', markersize=10, label='Grid Points')
     gdf_data.plot(ax=ax, color='black', markersize=20, label='Delhi Air Stations')
@@ -380,7 +392,7 @@ if st.sidebar.button('Run Algorithm'):
 
  #-------------------------------------------------------------------------------------------
     st.markdown("---")
-    st.subheader("Dynamic Presentation")
+   # st.subheader("Dynamic Presentation")
     st.markdown("---")
     import plotly.express as px
 
