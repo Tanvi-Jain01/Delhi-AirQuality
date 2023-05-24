@@ -214,7 +214,7 @@ if st.sidebar.button('Run Algorithm'):
 
 
     print(np.concatenate(predn_list))
-    st.write('Testing RMSE',rmse_values)
+    #st.write('Testing RMSE',rmse_values)
  #-------------------------------------------------------------------------------------------
   #  flat_list = np.array(predn_list).flatten()
 
