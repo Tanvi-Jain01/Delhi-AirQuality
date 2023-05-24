@@ -108,15 +108,16 @@ type(stationgeo)
 #gdf_shape = gpd.read_file(shapefile_path)
 
 import geopandas as gpd
-
 # Download the shapefile from the GitHub repository to a local file
 shapefile_url = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/raw/main/Districts.shp'
 local_file_path = 'Districts.shp'
-gpd.io.file.fiona.dl_url(shapefile_url, local_file_path)
+
+response = requests.get(shapefile_url)
+with open(local_file_path, 'wb') as file:
+    file.write(response.content)
 
 # Read the shapefile from the local file
 gdf_shape = gpd.read_file(local_file_path)
-
 
 
 #--------------------------------------------------------------------------------------------------------------
