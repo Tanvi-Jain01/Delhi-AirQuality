@@ -83,17 +83,7 @@ df['date_index']=df['Date']
 print(df.columns)
 df.set_index('date_index')
 
-""""
-#df.groupby('Date')
-grouped = df.groupby('Date')
-unique_dates = grouped.groups.keys()
-print("Unique Date's group",len(unique_dates))
 
-specific_group = grouped.get_group('2022-01-29')
-group_count = len(specific_group)
-print("Each group has",group_count,'Batch')
-
-"""
 #----------------------------------------------------------------------------------
 
 unique=df[['station','latitude','longitude']].drop_duplicates()
@@ -109,13 +99,7 @@ stationgeo=gpd.GeoDataFrame(unique,geometry=geometry)
 print(stationgeo)
 type(stationgeo)
 
-"""
-fig, ax = plt.subplots(figsize=(8, 8))
-# Plot the GeoDataFrame
-stationgeo.plot(ax=ax,color='red')
-# Show the plot
-plt.show()
-"""
+
 #-------------------------------------------------------------------------------------------------------
 
 #gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
@@ -134,14 +118,7 @@ gpd.io.file.fiona.dl_url(shapefile_url, local_file_path)
 gdf_shape = gpd.read_file(local_file_path)
 
 
-"""
-print(gdf_shape.head())
-# Plot the shapefile
-gdf_shape.boundary.plot(figsize=(8, 8),edgecolor='black')
 
-# Display the plot
-plt.show()
-"""
 #--------------------------------------------------------------------------------------------------------------
 
 gdf_data = gpd.GeoDataFrame(unique, geometry=geometry)
@@ -149,18 +126,7 @@ gdf_data = gpd.GeoDataFrame(unique, geometry=geometry)
 # Set the CRS of the GeoDataFrame to match the shapefile
 gdf_data.crs = gdf_shape.crs   #try directly stationgeo here
 
-"""
-# Plot the shapefile
-fig, ax = plt.subplots(figsize=(10, 10))
-gdf_shape.boundary.plot(ax=ax,edgecolor='black')
 
-# Plot the data points on top of the shapefile
-gdf_data.plot(ax=ax, color='red', markersize=20, label='Air Stations')
-ax.legend()
-plt.title('Delhi Air Stations')
-# Show the plot
-plt.show()
-"""
 
 #-------------------------------------------------------------------------------------------
 df = df.fillna(method='ffill')
@@ -223,20 +189,6 @@ if st.sidebar.button('Run Algorithm'):
     model_list.extend(model)
     
 
-    ###TRAINING RMSE
-    rmse_values = []
-    predn_list = []
-
-    for i,j in enumerate(train_time_df.groups.keys()):
-        X_train_i = train_time_df.get_group(j)
-        y_train_i = X_train_i.iloc[:, -1]
-        y_train_pred_i = model_list[i].predict(X_train_i.iloc[:, 1:-1])
-        predn_list.append(y_train_pred_i)
-        
-    rmse_i = mean_squared_error(y_train_i, y_train_pred_i, squared=False)   
-    rmse_values.append(rmse_i)
-    #k_list.append(k)
-    st.write('Training RMSE',rmse_values)
 
     ###TESTING RMSE
     rmse_values = []
