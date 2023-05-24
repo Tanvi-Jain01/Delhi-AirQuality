@@ -118,9 +118,10 @@ plt.show()
 """
 #-------------------------------------------------------------------------------------------------------
 
-gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
-gdf_shape = gpd.read_file(gdf_shape)
-
+#gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
+#gdf_shape = gpd.read_file(gdf_shape)
+shapefile_path = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp'
+gdf_shape = gpd.read_file(shapefile_path)
 """
 print(gdf_shape.head())
 # Plot the shapefile
@@ -262,7 +263,10 @@ if st.sidebar.button('Run Algorithm'):
 
 
  # Load the shapefile
-    delhi_shapefile = gpd.read_file(r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
+   # delhi_shapefile = gpd.read_file(r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
+    delhi_shapefile = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp'
+    gdf_shape = gpd.read_file(delhi_shapefile)
+
 
  # Generate the grid of points
     x = np.linspace(stationgeo['longitude'].min() - 0.5, stationgeo['longitude'].max() + 0.5, num=25)
