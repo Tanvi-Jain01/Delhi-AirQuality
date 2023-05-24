@@ -178,8 +178,8 @@ if st.sidebar.button('Run Algorithm'):
     #gs = KNeighborsRegressor(n_neighbors=k, weights='uniform')
     gs = KNeighborsRegressor(n_neighbors=k, algorithm=algorithm, weights=weights, metric=distance_metric, n_jobs=-1)
     model_list = []
-    train_time_df = X_train.groupby(selected_date)
-    
+    #train_time_df = X_train.groupby(selected_date)
+    train_time_df = X_train.groupby('Date')
     # Train the model for each time step
     model = train_time_df.apply(fit_model)
     model_list.extend(model)
@@ -189,7 +189,8 @@ if st.sidebar.button('Run Algorithm'):
     ###TESTING RMSE
     rmse_values = []
     predn_list = []
-    test_time_df = X_test.groupby(selected_date)
+    #test_time_df = X_test.groupby(selected_date)
+    test_time_df = X_test.groupby('Date')
         
         # Predict using the  trained model for each time step
 
