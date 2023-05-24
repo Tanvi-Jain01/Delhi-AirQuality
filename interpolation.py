@@ -227,7 +227,7 @@ if st.sidebar.button('Run Algorithm'):
    # delhi_shapefile = gpd.read_file(r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
     #delhi_shapefile = 'https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp'
     gdf_shape = (r'Districts.shp') 
-     delhi_shapefile= gpd.read_file(gdf_shape)   
+    delhi_shapefile= gpd.read_file(gdf_shape)   
 
 
  # Generate the grid of points
