@@ -108,12 +108,13 @@ type(stationgeo)
 #gdf_shape = gpd.read_file(shapefile_path)
 
 import geopandas as gpd
-dataset_url = "https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp"
-gdf_shape = wget.download(dataset_url)
 
+#dataset_url = "https://github.com/Tanvi-Jain01/Delhi-AirQuality/blob/main/Districts.shp"
+#gdf_shape = wget.download(dataset_url)
+#gdf_shape = gpd.read_file(gdf_shape)
+
+gdf_shape = (r'Districts.shp')
 gdf_shape = gpd.read_file(gdf_shape)
-
-
 #--------------------------------------------------------------------------------------------------------------
 
 gdf_data = gpd.GeoDataFrame(unique, geometry=geometry)
