@@ -310,8 +310,8 @@ if st.sidebar.button('Run Algorithm'):
     contour = ax.contourf(lon_grid,lat_grid, testing['PM2.5'].values.reshape(lon_grid.shape), cmap='coolwarm', levels=200)
 
  # Add the shapefile to the plot
-    #delhi_shapefile.plot(ax=ax, edgecolor='black', facecolor='none')
-    gdf_shape.plot(ax=ax, edgecolor='black', facecolor='none')
+    delhi_shapefile.plot(ax=ax, edgecolor='black', facecolor='none')
+    #gdf_shape.plot(ax=ax, edgecolor='black', facecolor='none')
  # Plot the grid points
  #grid_points.plot(ax=ax, marker='o', color='grey', markersize=10, label='Grid Points')
     gdf_data.plot(ax=ax, color='black', markersize=20, label='Delhi Air Stations')
