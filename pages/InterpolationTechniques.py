@@ -17,6 +17,8 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.impute import SimpleImputer
 import streamlit as st
 import wget
+
+!pip install metpy
 import metpy
 st.title("Geo Spatial Interpolation")
 
