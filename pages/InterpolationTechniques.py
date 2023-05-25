@@ -171,9 +171,9 @@ gx, gy = np.meshgrid(x, y)
 st.sidebar.title("Interpolation Techniques")
 
 import streamlit as st
-from metpy.cbook import get_test_data
+#from metpy.cbook import get_test_data
 from metpy.interpolate import interpolate_to_grid
-from metpy.plots import add_metpy_logo
+#from metpy.plots import add_metpy_logo
 
 
 
