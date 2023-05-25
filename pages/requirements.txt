@@ -25,6 +25,7 @@ plotly
 wget
 geopandas==0.13.0
 shapely
-MetPy
-metpy==1.1.0
+metpy==1.5.0
+pint==0.21
+pyproj==3.5.0
 metpy.interpolate
