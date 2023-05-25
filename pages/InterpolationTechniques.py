@@ -19,6 +19,7 @@ import streamlit as st
 import wget
 
 #pip install metpy
+import scipy
 import metpy
 st.title("Geo Spatial Interpolation")
 
