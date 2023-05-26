@@ -147,7 +147,7 @@ max_depth = st.sidebar.selectbox('max_depth', (None, 5, 10, 15, 20,25,30), index
 max_leaf_nodes = st.sidebar.slider('max_leaf_nodes', min_value=2, max_value=20, value=None)
 
 
-st.write(selected_date)
+#st.write(selected_date)
 
 #-------------------------------------------------------------------------------------------
 #if st.sidebar.button('Run Algorithm'):
