@@ -187,7 +187,7 @@ model_list.extend(model)
 
 ###TRAINING RMSE
 
-st.subheader("Training RMSE")
+st.subheader("Training")
 st.markdown("---")
 
 rmse_values = []
@@ -244,7 +244,7 @@ st.pyplot(fig)
 
 
 ###TESTING RMSE
-st.subheader("Testing RMSE")
+st.subheader("Testing")
 st.markdown("---")
 
 rmse_values = []
@@ -423,6 +423,8 @@ plt.legend()
 
  # Show the plot
  #plt.show()
+st.subheader("Interpolation")
+st.markdown("---")
 st.pyplot(fig)
 
  #-------------------------------------------------------------------------------------------
