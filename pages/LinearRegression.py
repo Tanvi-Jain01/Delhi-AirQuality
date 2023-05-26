@@ -199,17 +199,17 @@ ax.set_title('Training RMSE')
 # Display the plot
 st.pyplot(fig)
 
-fig, ax = plt.subplots(figsize=(7, 7))
-scatter = ax.scatter(X_train_i['longitude'], X_train_i['latitude'], c=train_time_df['true_y'], cmap='coolwarm', alpha=0.8, s=50)
-cbar = plt.colorbar(scatter, ax=ax)
+# fig, ax = plt.subplots(figsize=(7, 7))
+# scatter = ax.scatter(X_train_i['longitude'], X_train_i['latitude'], c=train_time_df['true_y'], cmap='coolwarm', alpha=0.8, s=50)
+# cbar = plt.colorbar(scatter, ax=ax)
 
-# Set labels and title
-ax.set_xlabel('Longitude')
-ax.set_ylabel('Latitude')
-ax.set_title('Bubble Plot of PM2.5')
+# # Set labels and title
+# ax.set_xlabel('Longitude')
+# ax.set_ylabel('Latitude')
+# ax.set_title('Bubble Plot of PM2.5')
 
-# Display the plot
-st.pyplot(fig)
+# # Display the plot
+# st.pyplot(fig)
 
 #-------------------------------------------------------------------------------------------
 
@@ -246,7 +246,7 @@ fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(test_time_df.index, test_time_df["true_y"], label='True Y')
 ax.plot(test_time_df.index, test_time_df["pred_y"], label='Pred Y')
 ax.legend()
-ax.set_xlabel('Index')
+ax.set_xlabel('Station')
 ax.set_ylabel('PM2.5')
 ax.set_title('True Y vs Pred Y')
 
@@ -357,6 +357,8 @@ plt.legend()
 
 # Show the plot
 # plt.show()
+st.subheader("Interpolation")
+st.markdown("---")
 st.pyplot(fig)
 
 st.markdown("---")
