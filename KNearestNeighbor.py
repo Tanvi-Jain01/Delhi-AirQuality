@@ -21,9 +21,18 @@ st.title("Geo Spatial Interpolation")
 
 st.markdown("---")
 
+import wget
+
+# Download dataset file from GitHub
+dataset_url = "https://github.com/patel-zeel/delhi_aq/raw/main/data/delhi_cpcb_2022.nc"
+dataset_file = wget.download(dataset_url)
+
+# Read the NetCDF file
+ds = xr.open_dataset(dataset_file)
+
 
 # Load the NetCDF file into an xarray dataset
-ds = xr.open_dataset(r'C:\Users\Harshit Jain\Desktop\delhiaq\delhi_cpcb_2022.nc')
+#ds = xr.open_dataset(r'C:\Users\Harshit Jain\Desktop\delhiaq\delhi_cpcb_2022.nc')
 #print(type(ds))
 
 df = ds.to_dataframe().reset_index()
@@ -93,9 +102,12 @@ stationgeo=gpd.GeoDataFrame(unique,geometry=geometry)
 
 #-------------------------------------------------------------------------------------------------------
 
-gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
-gdf_shape = gpd.read_file(gdf_shape)
+#gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
+#gdf_shape = gpd.read_file(gdf_shape)
 
+
+gdf_shape = (r'Districts.shp')
+gdf_shape = gpd.read_file(gdf_shape)
 
 #--------------------------------------------------------------------------------------------------------------
 
@@ -309,7 +321,9 @@ lon = st.sidebar.slider('Longitude', min_value=10, max_value=50, value=25, step=
 lat = st.sidebar.slider('Latitude', min_value=10, max_value=50, value=25, step=5)
 
  # Load the shapefile
-delhi_shapefile = gpd.read_file(r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
+#delhi_shapefile = gpd.read_file(r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
+gdf_shape = (r'Districts.shp') 
+delhi_shapefile= gpd.read_file(gdf_shape)   
 
  # Generate the grid of points
 x = np.linspace(stationgeo['longitude'].min() - 0.5, stationgeo['longitude'].max() + 0.5, num=lon)
