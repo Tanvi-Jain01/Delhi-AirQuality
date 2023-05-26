@@ -193,13 +193,14 @@ train_time_df['pred_y'] = y_train_pred_i
 train_time_df.reset_index(drop=True, inplace=True)
 st.write(train_time_df.T)
 
-fig, ax = plt.subplots(figsize=(5, 5))
-line = ax.plot(range(len(train_time_df['true_y'])), X_train_i['PM2.5'], train_time_df['true_y'])
-line2 = ax.plot(range(len(train_time_df['true_y'])), X_train_i['PM2.5'], train_time_df['pred_y'])
-ax.legend()
+
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.plot(train_time_df.index, train_time_df['true_y'], label='True Y')
+ax.plot(train_time_df.index, train_time_df['pred_y'], label='Pred Y')
 ax.set_xlabel('Stations')
-ax.set_ylabel('Pm2.5')
-ax.set_title('Training RMSE')
+ax.set_ylabel('Value')
+ax.set_title('True Y vs Pred Y')
+ax.legend()
 
 # Display the plot
 st.pyplot(fig)
