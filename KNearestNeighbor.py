@@ -284,7 +284,7 @@ fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(test_time_df.index, test_time_df["true_y"], label='True Y')
 ax.plot(test_time_df.index, test_time_df["pred_y"], label='Pred Y')
 ax.legend()
-ax.set_xlabel('Index')
+ax.set_xlabel('Station')
 ax.set_ylabel('PM2.5')
 ax.set_title('True Y vs Pred Y')
 
