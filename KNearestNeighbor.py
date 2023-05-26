@@ -157,7 +157,7 @@ distance_metric = st.sidebar.selectbox('Distance Metric', ['euclidean', 'manhatt
 algorithm = st.sidebar.selectbox('Algorithm', ['auto', 'ball_tree', 'kd_tree', 'brute'])
 
 
-st.write(selected_date)
+#st.write(selected_date)
 
 #-------------------------------------------------------------------------------------------
 #if st.sidebar.button('Run Algorithm'):
