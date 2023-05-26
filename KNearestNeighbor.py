@@ -448,7 +448,7 @@ fig = px.scatter_mapbox(df, lat="latitude", lon="longitude", hover_name="station
                         zoom=9, height=500,color='PM2.5')
 fig.update_layout(mapbox_style="open-street-map")
  #fig.show()
-st.plotly_chart(fig)
+#st.plotly_chart(fig)
 
 
 
