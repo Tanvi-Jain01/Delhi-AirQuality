@@ -25,4 +25,4 @@ plotly
 wget
 geopandas==0.13.0
 shapely
-
+metpy
