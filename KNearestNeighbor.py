@@ -23,7 +23,9 @@ st.title("Geo Spatial Interpolation")
          
 st.write("Geospatial interpolation is a technique used to estimate and fill in missing or unobserved data points in a spatial dataset, specifically in the context of the Delhi dataset. The Delhi dataset consists of georeferenced measurements of air quality variables, such as PM2.5, collected from various monitoring stations across the Delhi region. Interpolation methods are employed to predict the air quality values at unsampled locations based on the observed data from neighboring stations. These methods utilize the spatial coordinates (longitude and latitude)including Date and performing Spatial Interpolation of the air quality measurements at the observed stations to create a continuous surface representation of the variable of interest.")
 
-
+st.title("K-Nearest Neighbor")
+st.write("This algorithm calculates the distances between the unsampled location and the available data points, and then selects the k nearest neighbors. The values of these neighbors are used to estimate the missing value by taking into account their distances and potentially applying weights based on their proximity.")
+st.write("kNN interpolation is simple to implement and can handle irregularly distributed data points. However, it is sensitive to the choice of k, the number of neighbors, and the distance metric used. Additionally, kNN interpolation may not capture complex spatial patterns or account for spatial dependencies. Nevertheless, kNN-based geospatial interpolation offers a flexible and intuitive approach for filling in missing values and generating continuous spatial representations of the target variable.")
 
 import wget
 
