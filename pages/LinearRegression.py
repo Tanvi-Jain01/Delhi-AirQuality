@@ -21,6 +21,16 @@ from sklearn.linear_model import LinearRegression
 st.title("Geo Spatial Interpolation")
 
 st.markdown("---")
+st.subheader("Linear Regression")
+st.write("This method assumes a linear relationship between the target variable and the spatial coordinates (longitude and latitude) of the observed data points. In geospatial interpolation, linear regression models are trained using the observed data to establish a mathematical equation that best fits the relationship between the spatial coordinates and the target variable.")
+st.write("Once the regression model is trained, it can be used to predict the target variable at unsampled locations based on their spatial coordinates. Linear regression interpolates the target variable by calculating the expected value as a linear combination of the observed data points, considering their respective spatial weights.")
+st.write("While linear regression is a relatively simple and interpretable method, it may not capture complex spatial patterns or non-linear relationships effectively. However, it provides a valuable approach for geospatial interpolation when the assumption of linearity is reasonable and when a straightforward estimation of the target variable is desired.")
+
+st.markdown("---")
+
+
+
+
 
 
 # Load the NetCDF file into an xarray dataset
