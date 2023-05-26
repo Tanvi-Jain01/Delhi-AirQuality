@@ -20,6 +20,19 @@ import streamlit as st
 st.title("Geo Spatial Interpolation")
 
 st.markdown("---")
+st.title("Linear Interpolation")
+st.markdown("---")
+
+st.write("Linear interpolation is a commonly used technique in geospatial interpolation to estimate missing or unobserved data points within a spatial dataset. Linear interpolation assumes a linear relationship between neighboring observed data points and uses this relationship to predict values at unsampled locations.")
+st.write("In geospatial interpolation, linear interpolation utilizes the spatial coordinates (longitude and latitude) and the observed values of the target variable to estimate values at unsampled locations along a straight line between neighboring points. The method calculates the weightage or proportion assigned to each neighboring point based on their distance to the target location. These weightages are used to determine the interpolated value, where closer neighbors have higher influence. ")
+st.write("Linear interpolation assumes a smooth and gradual change in the variable across space, resulting in a continuous surface representation. While linear interpolation is relatively simple and computationally efficient, it may not capture complex spatial patterns or abrupt changes in the target variable as effectively as other interpolation methods. Nevertheless, linear interpolation provides a basic approach for geospatial interpolation, serving as a useful baseline for comparison with more advanced techniques.")
+
+st.title("Nearest Interpolation")
+st.markdown("---")
+st.write("NearestNDInterpolator is a widely used technique in geospatial interpolation. This method assigns the value of the nearest observed data point to the unsampled location, effectively applying the 'nearest neighbor' concept.")
+st.write("In geospatial interpolation, NearestNDInterpolator utilizes the spatial coordinates (longitude and latitude) of both observed and unsampled locations to identify the closest observed point. The method assigns the value of this nearest observed point to the unsampled location, resulting in a discrete representation of the target variable.")
+st.write("NearestNDInterpolator is particularly useful when spatial patterns exhibit abrupt changes or discontinuities, as it preserves the original values without interpolation between neighboring points. However, it may not capture fine-grained variations in the target variable as effectively as other interpolation methods. Nevertheless, NearestNDInterpolator provides a straightforward and computationally efficient approach for geospatial interpolation, particularly when preserving the exact values of the observed data points is critical.")
+
 import wget
 
 # Download dataset file from GitHub
