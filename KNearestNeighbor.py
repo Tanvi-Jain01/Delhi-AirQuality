@@ -186,7 +186,7 @@ model_list.extend(model)
 #-------------------------------------------------------------------------------------------
 
 ###TRAINING RMSE
-
+st.markdown("---")
 st.subheader("Training")
 st.markdown("---")
 
@@ -244,6 +244,7 @@ st.pyplot(fig)
 
 
 ###TESTING RMSE
+st.markdown("---")
 st.subheader("Testing")
 st.markdown("---")
 
