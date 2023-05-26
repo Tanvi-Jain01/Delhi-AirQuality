@@ -145,7 +145,7 @@ st.sidebar.title("K-Nearest Neighbour")
 selected_date = st.sidebar.date_input('Select Date', value=pd.to_datetime('2022-08-23'))
 
 # Slider for k value
-k = st.sidebar.slider('Choose K', min_value=1, max_value=31, value=14)
+k = st.sidebar.slider('Choose K for Training & Testing', min_value=1, max_value=31, value=14)
 
 # Selection for weights
 weights = st.sidebar.selectbox('Weights', ['uniform', 'distance'])
@@ -160,136 +160,136 @@ algorithm = st.sidebar.selectbox('Algorithm', ['auto', 'ball_tree', 'kd_tree', '
 st.write(selected_date)
 
 #-------------------------------------------------------------------------------------------
-if st.sidebar.button('Run Algorithm'):
+#if st.sidebar.button('Run Algorithm'):
 # Initialize lists to store RMSE and k values
     
-    selected_date = pd.to_datetime(selected_date)
-    def fit_model(x):
-        X, y = x.iloc[:,1:-1], x.iloc[:,-1]
-        model = gs.fit(X, y)
-        return model
+selected_date = pd.to_datetime(selected_date)
+def fit_model(x):
+    X, y = x.iloc[:,1:-1], x.iloc[:,-1]
+    model = gs.fit(X, y)
+    return model
 
 
 
-    # Loop over the k values
-    #for k in k:
-    gs = KNeighborsRegressor(n_neighbors=k, algorithm=algorithm, weights=weights, metric=distance_metric, n_jobs=-1)
-    model_list = []
-    train_time_df = X_train[X_train['Date'] ==selected_date].groupby('Date')
-    #train_time_df = X_train.groupby('Date')
-    
-    # Train the model for each time ste
-    model = train_time_df.apply(fit_model)
-    model_list.extend(model)
-   
-    
- #-------------------------------------------------------------------------------------------
+# Loop over the k values
+#for k in k:
+gs = KNeighborsRegressor(n_neighbors=k, algorithm=algorithm, weights=weights, metric=distance_metric, n_jobs=-1)
+model_list = []
+train_time_df = X_train[X_train['Date'] ==selected_date].groupby('Date')
+#train_time_df = X_train.groupby('Date')
 
-    ###TRAINING RMSE
-    
-    st.subheader("Training RMSE")
-    st.markdown("---")
-
-    rmse_values = []
-    predn_list = []
-
-    for i,j in enumerate(train_time_df.groups.keys()):
-        X_train_i = train_time_df.get_group(j)
-        y_train_i = X_train_i.iloc[:, -1]
-        y_train_pred_i = model_list[i].predict(X_train_i.iloc[:, 1:-1])
-        predn_list.append(y_train_pred_i)
-        
-      
-    rmse_i = mean_squared_error(y_train_i, y_train_pred_i, squared=False)   
-    print(np.concatenate(predn_list))
-    rmse_values.append(rmse_i)
-
-    st.write('Training RMSE',rmse_values)
-
-    train_time_df=pd.DataFrame()
-    train_time_df['true_y']=y_train_i
-    train_time_df['pred_y']=y_train_pred_i
-    train_time_df.reset_index(drop=True,inplace=True)
-    st.write(train_time_df.T)
-
-    #k_list.append(k)
-
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.plot(train_time_df.index, train_time_df['true_y'], label='True Y')
-    ax.plot(train_time_df.index, train_time_df['pred_y'], label='Pred Y')
-    ax.set_xlabel('Station')
-    ax.set_ylabel('Value')
-    ax.set_title('True Y vs Pred Y')
-    ax.legend()
-
-    # Display the plot
-    st.pyplot(fig)
+# Train the model for each time ste
+model = train_time_df.apply(fit_model)
+model_list.extend(model)
 
 
+#-------------------------------------------------------------------------------------------
 
-    # fig, ax = plt.subplots(figsize=(7, 7))
-    # scatter=ax.scatter(X_train_i['longitude'], X_train_i['latitude'], c= train_time_df['true_y'], cmap='coolwarm', alpha=0.8,s=50)
-    # cbar = plt.colorbar(scatter, ax=ax)
+###TRAINING RMSE
 
-    # # Set labels and title
-    # ax.set_xlabel('Longitude')
-    # ax.set_ylabel('Latitude')
-    # ax.set_title('Bubble Plot of PM2.5')
+st.subheader("Training RMSE")
+st.markdown("---")
 
-    # # Display the plot
-    # st.pyplot(fig)
+rmse_values = []
+predn_list = []
+
+for i,j in enumerate(train_time_df.groups.keys()):
+    X_train_i = train_time_df.get_group(j)
+    y_train_i = X_train_i.iloc[:, -1]
+    y_train_pred_i = model_list[i].predict(X_train_i.iloc[:, 1:-1])
+    predn_list.append(y_train_pred_i)
+
+
+rmse_i = mean_squared_error(y_train_i, y_train_pred_i, squared=False)   
+print(np.concatenate(predn_list))
+rmse_values.append(rmse_i)
+
+st.write('Training RMSE',rmse_values)
+
+train_time_df=pd.DataFrame()
+train_time_df['true_y']=y_train_i
+train_time_df['pred_y']=y_train_pred_i
+train_time_df.reset_index(drop=True,inplace=True)
+st.write(train_time_df.T)
+
+#k_list.append(k)
+
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.plot(train_time_df.index, train_time_df['true_y'], label='True Y')
+ax.plot(train_time_df.index, train_time_df['pred_y'], label='Pred Y')
+ax.set_xlabel('Station')
+ax.set_ylabel('Value')
+ax.set_title('True Y vs Pred Y')
+ax.legend()
+
+# Display the plot
+st.pyplot(fig)
+
+
+
+# fig, ax = plt.subplots(figsize=(7, 7))
+# scatter=ax.scatter(X_train_i['longitude'], X_train_i['latitude'], c= train_time_df['true_y'], cmap='coolwarm', alpha=0.8,s=50)
+# cbar = plt.colorbar(scatter, ax=ax)
+
+# # Set labels and title
+# ax.set_xlabel('Longitude')
+# ax.set_ylabel('Latitude')
+# ax.set_title('Bubble Plot of PM2.5')
+
+# # Display the plot
+# st.pyplot(fig)
 
 #-------------------------------------------------------------------------------------------
 
 
 
 ###TESTING RMSE
-    st.subheader("Testing RMSE")
-    st.markdown("---")
+st.subheader("Testing RMSE")
+st.markdown("---")
 
-    rmse_values = []
-    predn_list = []
+rmse_values = []
+predn_list = []
 
-    #test_time_df = X_test.groupby(selected_date)
-    test_time_df = X_test[X_test['Date'] == selected_date].groupby('Date')
-    #st.write(test_time_df)
+#test_time_df = X_test.groupby(selected_date)
+test_time_df = X_test[X_test['Date'] == selected_date].groupby('Date')
+#st.write(test_time_df)
 
-    #test_time_df = X_test.groupby('Date')
-        # Predict using the  trained model for each time step
+#test_time_df = X_test.groupby('Date')
+    # Predict using the  trained model for each time step
 
-    for i, j in enumerate(test_time_df.groups.keys()):
-            group_a = test_time_df.get_group(j)
-            #st.write(j)
-            predns = model_list[i].predict(group_a.iloc[:, 1:-1])
-            predn_list.append(predns)
-        
-    # Calculate RMSE
-    predict = pd.concat([pd.DataFrame(predn) for predn in predn_list], ignore_index=True)
-    test_time_df = predict.rename(columns={0: "pred_y"})
-    #test_time_df["true_y"] = X_test["PM2.5"].reset_index(drop=True)
-    test_time_df["true_y"] = X_test[X_test['Date'] == selected_date]["PM2.5"].values
+for i, j in enumerate(test_time_df.groups.keys()):
+        group_a = test_time_df.get_group(j)
+        #st.write(j)
+        predns = model_list[i].predict(group_a.iloc[:, 1:-1])
+        predn_list.append(predns)
 
-    
-    st.write(test_time_df.T)
-    # Compute RMSE for each time step
+# Calculate RMSE
+predict = pd.concat([pd.DataFrame(predn) for predn in predn_list], ignore_index=True)
+test_time_df = predict.rename(columns={0: "pred_y"})
+#test_time_df["true_y"] = X_test["PM2.5"].reset_index(drop=True)
+test_time_df["true_y"] = X_test[X_test['Date'] == selected_date]["PM2.5"].values
 
-    rmse = mean_squared_error(test_time_df["true_y"], np.concatenate(predn_list)) ** 0.5
-        
-   # Store RMSE and k values
-    rmse_values.append(rmse)  
-     #k_list.append(k)
-    st.write('Testing RMSE',rmse_values)
 
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(test_time_df.index, test_time_df["true_y"], label='True Y')
-    ax.plot(test_time_df.index, test_time_df["pred_y"], label='Pred Y')
-    ax.legend()
-    ax.set_xlabel('Index')
-    ax.set_ylabel('PM2.5')
-    ax.set_title('True Y vs Pred Y')
+st.write(test_time_df.T)
+# Compute RMSE for each time step
 
-    st.pyplot(fig)
-    #print(np.concatenate(predn_list))
+rmse = mean_squared_error(test_time_df["true_y"], np.concatenate(predn_list)) ** 0.5
+
+# Store RMSE and k values
+rmse_values.append(rmse)  
+ #k_list.append(k)
+st.write('Testing RMSE',rmse_values)
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(test_time_df.index, test_time_df["true_y"], label='True Y')
+ax.plot(test_time_df.index, test_time_df["pred_y"], label='Pred Y')
+ax.legend()
+ax.set_xlabel('Index')
+ax.set_ylabel('PM2.5')
+ax.set_title('True Y vs Pred Y')
+
+st.pyplot(fig)
+#print(np.concatenate(predn_list))
 #     fig, ax = plt.subplots(figsize=(5, 5))
 
 #     #size = test_time_df["true_y"] * 10
@@ -304,11 +304,11 @@ if st.sidebar.button('Run Algorithm'):
 #     st.pyplot(fig)
 
 
-    
 
- #-------------------------------------------------------------------------------------------
-    flat_list = np.array(predn_list).flatten()
-    #st.write(flat_list)
+
+#-------------------------------------------------------------------------------------------
+flat_list = np.array(predn_list).flatten()
+#st.write(flat_list)
 
 
 #-------------------------------------------------------------------------------------------
