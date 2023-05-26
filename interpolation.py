@@ -16,7 +16,12 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.impute import SimpleImputer
 import streamlit as st
-from metpy.interpolate import interpolation_to_grid
+#from metpy.interpolate import interpolation_to_grid
+from metpy.cbook import get_test_data
+from metpy.interpolate import (interpolate_to_grid, remove_nan_observations,
+                               remove_repeat_coordinates)
+from metpy.plots import add_metpy_logo
+
 st.title("Geo Spatial Interpolation")
 
 st.markdown("---")
