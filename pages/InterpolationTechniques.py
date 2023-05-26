@@ -16,27 +16,24 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.impute import SimpleImputer
 import streamlit as st
-import wget
 
-#pip install metpy
-import scipy
-import metpy
 st.title("Geo Spatial Interpolation")
 
 st.markdown("---")
+import wget
 
+# Download dataset file from GitHub
+dataset_url = "https://github.com/patel-zeel/delhi_aq/raw/main/data/delhi_cpcb_2022.nc"
+dataset_file = wget.download(dataset_url)
+
+# Read the NetCDF file
+ds = xr.open_dataset(dataset_file)
 
 # Load the NetCDF file into an xarray dataset
 #ds = xr.open_dataset(r'C:\Users\Harshit Jain\Desktop\delhiaq\delhi_cpcb_2022.nc')
 #print(type(ds))
 
-dataset_url = "https://github.com/patel-zeel/delhi_aq/raw/main/data/delhi_cpcb_2022.nc"
-dataset_file = wget.download(dataset_url)
-
-ds = xr.open_dataset(dataset_file)
-
 df = ds.to_dataframe().reset_index()
-
 #print(df)
 #-----------------------------------------------------------------------
 
@@ -103,10 +100,11 @@ stationgeo=gpd.GeoDataFrame(unique,geometry=geometry)
 
 #-------------------------------------------------------------------------------------------------------
 
-gdf_shape = ('Districts.shp')
+#gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
+#gdf_shape = gpd.read_file(gdf_shape)
+
+gdf_shape = (r'Districts.shp')
 gdf_shape = gpd.read_file(gdf_shape)
-
-
 #--------------------------------------------------------------------------------------------------------------
 
 gdf_data = gpd.GeoDataFrame(unique, geometry=geometry)
@@ -130,26 +128,41 @@ X_test = df[df.station.isin(test_station)]
 #X_train.station.unique().shape, X_test.shape, X_test.columns    
 
 
-#------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
 #df.set_index("time_")
 X_train = X_train[['Date','latitude','longitude','PM2.5']]
 X_test = X_test[['Date','latitude','longitude','PM2.5']]
 
-#---------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+
 
 
 
 #from scipy.interpolate import interpolate_to_grid
 #delhi_shapefile = gdf_shape = (r'C:\Users\Harshit Jain\Desktop\delhiaq\Delhi\Districts.shp')
 #delhi_shapefile = gpd.read_file(delhi_shapefile)
+gdf_shape = (r'Districts.shp') 
+delhi_shapefile= gpd.read_file(gdf_shape)   
 
-delhi_shapefile = (r'Districts.shp')
-delhi_shapefile = gpd.read_file(delhi_shapefile)
+#--------------------------------------------------------------------------------------------------
 
-date='2022-08-23'
+st.sidebar.title("Interpolation Techniques")
+selected_date = st.sidebar.date_input('Select Date', value=pd.to_datetime('2022-08-23'))
+
+#st.write(selected_date)
+
+selected_date = pd.to_datetime(selected_date)
+
+interp_type = st.sidebar.selectbox('Interpolation Type', ['linear', 'nearest'])
+lon = st.sidebar.slider('Longitude', min_value=10, max_value=500, value=50, step=5)
+lat = st.sidebar.slider('Latitude', min_value=10, max_value=500, value=50, step=5)
+
+#--------------------------------------------------------------------------------------------------
+
+#date='2022-08-23'
 
 train = df[['Date','latitude','longitude','PM2.5']]
-train_filtered = train[train['Date'] == date]
+train_filtered = train[train['Date'] == selected_date]
 
 
 # Convert train_filtered coordinates and variable to numpy arrays
@@ -159,72 +172,42 @@ variable = train_filtered['PM2.5'].to_numpy()
 
 print('shfzdtdthzedtjseztjs',xp,yp,variable)
 
-
+x = np.linspace(stationgeo['longitude'].min()-0.5, stationgeo['longitude'].max()+0.5, num=lon)
 # Generate the grid of points
-x = np.linspace(stationgeo['longitude'].min()-0.5, stationgeo['longitude'].max()+0.5, num=300)
-y = np.linspace(stationgeo['latitude'].min()-0.5 , stationgeo['latitude'].max()+0.5, num=300)
+y = np.linspace(stationgeo['latitude'].min()-0.5 , stationgeo['latitude'].max()+0.5, num=lat)
 
 # Create the grid coordinates using meshgrid
 gx, gy = np.meshgrid(x, y)
 
+grid_x =  gx
+grid_y = gy
 
 
 
 
 
-st.sidebar.title("Interpolation Techniques")
+
 
 import streamlit as st
-#from metpy.cbook import get_test_data
-from metpy.interpolate import interpolate_to_grid
-#from metpy.plots import add_metpy_logo
-
-
+from scipy.interpolate import LinearNDInterpolator,NearestNDInterpolator
 
 # Create a selectbox for interpolation type
-interp_type = st.sidebar.selectbox('Interpolation Type', ['linear', 'nearest', 'cubic', 'rbf', 'natural_neighbor', 'barnes', 'cressman'])
 
-# Create a slider for horizontal resolution
-hres = st.sidebar.slider('Horizontal Resolution', min_value=10000, max_value=100000, step=10000, value=50000)
-
-# Create a slider for minimum neighbors
-minimum_neighbors = st.sidebar.slider('Minimum Neighbors', min_value=1, max_value=39, value=3)
-
-# Create a slider for gamma (applicable for barnes interpolation)
-gamma = st.sidebar.slider('Gamma', min_value=0.0, max_value=1.0, value=0.25)
-
-# Create a slider for kappa_star (applicable for barnes interpolation)
-kappa_star = st.sidebar.slider('Kappa Star', min_value=0.0, max_value=10.0, value=5.052)
-
-# Create a slider for search radius
-search_radius = st.sidebar.slider('Search Radius', min_value=0.0, max_value=10000.0, value=100.0)
-
-# Create a selectbox for rbf function
-rbf_func = st.sidebar.selectbox('Rbf Function', ['multiquadric', 'inverse', 'gaussian', 'linear', 'cubic', 'quintic', 'thin_plate'])
-
-# Create a slider for rbf smooth
-rbf_smooth = st.sidebar.slider('Rbf Smooth', min_value=0.0, max_value=1.0, value=0.0)
 
 # Call the interpolate_to_grid function with the provided parameters
-gx,gy,img = interpolate_to_grid(xp,yp,variable, interp_type=interp_type, hres=hres, minimum_neighbors=minimum_neighbors,
-                             gamma=gamma, kappa_star=kappa_star, search_radius=search_radius,
-                             rbf_func=rbf_func, rbf_smooth=rbf_smooth)
+
+if interp_type=='linear':
+    interp=LinearNDInterpolator(list(zip(xp,yp)),variable)
+    z=interp(grid_x,grid_y)
+
+
+if interp_type=='nearest':
+    interp=NearestNDInterpolator(list(zip(xp,yp)),variable)
+    z=interp(grid_x,grid_y)
+
 
 # Print the result
-st.write('Interpolated Grid:', img)
-
-
-
-
-
-print('gggggggggggggggggggggggggg',gx,gy,img)
-print('image',img)
-# Create a masked array to handle NaN values
-#img_2d = img.reshape(gx.shape)
-#img = np.ma.masked_where(np.isnan(img), img)
-
-
-print('image',img)
+#st.write('Interpolated Grid:', )
 
 
 # Create the figure and plot
@@ -236,10 +219,12 @@ plt.xlim(shapefile_extent[0], shapefile_extent[2])
 plt.ylim(shapefile_extent[1], shapefile_extent[3])
 
 # Plot the interpolated values as a contour plot
-contour = ax.contourf(gx, gy, img, cmap='coolwarm', levels=50)
+
+contour = ax.contourf(grid_x, grid_y, z, cmap='coolwarm', levels=50)
+
 
 # Add the shapefile to the plot
-delhi_shapefile.plot(ax=ax, edgecolor='black', facecolor='none')
+delhi_shapefile.plot(ax =ax, edgecolor='black', facecolor='none')
 gdf_data.plot(ax=ax, color='black', markersize=20, label='Air Stations')
 # Add a colorbar
 #plt.colorbar(contour,ax=ax)
@@ -254,5 +239,6 @@ plt.title('Geospatial Interpolation')
 plt.show()
 st.pyplot(fig)
 
-
  #-------------------------------------------------------------------------------------------
+
+
