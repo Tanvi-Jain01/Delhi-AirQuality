@@ -32,6 +32,8 @@ st.markdown("---")
 st.write("NearestNDInterpolator is a widely used technique in geospatial interpolation. This method assigns the value of the nearest observed data point to the unsampled location, effectively applying the 'nearest neighbor' concept.")
 st.write("In geospatial interpolation, NearestNDInterpolator utilizes the spatial coordinates (longitude and latitude) of both observed and unsampled locations to identify the closest observed point. The method assigns the value of this nearest observed point to the unsampled location, resulting in a discrete representation of the target variable.")
 st.write("NearestNDInterpolator is particularly useful when spatial patterns exhibit abrupt changes or discontinuities, as it preserves the original values without interpolation between neighboring points. However, it may not capture fine-grained variations in the target variable as effectively as other interpolation methods. Nevertheless, NearestNDInterpolator provides a straightforward and computationally efficient approach for geospatial interpolation, particularly when preserving the exact values of the observed data points is critical.")
+st.markdown("---")
+
 
 import wget
 
@@ -210,11 +212,16 @@ from scipy.interpolate import LinearNDInterpolator,NearestNDInterpolator
 # Call the interpolate_to_grid function with the provided parameters
 
 if interp_type=='linear':
+    
+    st.subheader("Linear Interpolation")
+    st.markdown("---")
     interp=LinearNDInterpolator(list(zip(xp,yp)),variable)
     z=interp(grid_x,grid_y)
 
 
 if interp_type=='nearest':
+    st.subheader("Nearest Neighbor Interpolation")
+    st.markdown("---")
     interp=NearestNDInterpolator(list(zip(xp,yp)),variable)
     z=interp(grid_x,grid_y)
 
