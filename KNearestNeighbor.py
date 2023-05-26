@@ -21,7 +21,7 @@ st.title("Geo Spatial Interpolation")
 
 #st.markdown("---")
          
-st.write("Geospatial interpolation is a technique used to estimate and fill in missing or unobserved data points in a spatial dataset, specifically in the context of the Delhi dataset. The Delhi dataset consists of georeferenced measurements of air quality variables, such as PM2.5, collected from various monitoring stations across the Delhi region. Interpolation methods are employed to predict the air quality values at unsampled locations based on the observed data from neighboring stations. These methods utilize the spatial coordinates (longitude and latitude) and the air quality measurements at the observed stations to create a continuous surface representation of the variable of interest.")
+st.write("Geospatial interpolation is a technique used to estimate and fill in missing or unobserved data points in a spatial dataset, specifically in the context of the Delhi dataset. The Delhi dataset consists of georeferenced measurements of air quality variables, such as PM2.5, collected from various monitoring stations across the Delhi region. Interpolation methods are employed to predict the air quality values at unsampled locations based on the observed data from neighboring stations. These methods utilize the spatial coordinates (longitude and latitude)including Date and performing Spatial Interpolation of the air quality measurements at the observed stations to create a continuous surface representation of the variable of interest.")
 
 
 
