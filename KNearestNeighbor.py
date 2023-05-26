@@ -146,7 +146,7 @@ X_test = X_test[['Date','latitude','longitude','PM2.5']]
 #---------------------------------------------------------------------------
 
 
-st.sidebar.title("K-Nearest Neighbour")
+st.sidebar.title("K-Nearest Neighbor")
 
 selected_date = st.sidebar.date_input('Select Date', value=pd.to_datetime('2022-08-23'))
 
