@@ -291,6 +291,7 @@ delhi_shapefile.plot(ax=ax, edgecolor='black', facecolor='none')
 gdf_data.plot(ax=ax, color='black', markersize=20, label='Air Stations')
 # Add a colorbar
 #plt.colorbar(contour,ax=ax)
+ax.legend()
 plt.colorbar(contour, label='PM2.5',shrink=0.7,format='%.3f')
 
 # Customize the plot appearance
