@@ -22,11 +22,12 @@ st.title("Geo Spatial Interpolation")
 st.markdown("---")
 
 
-st.write("Geospatial interpolation using Random Forest is a powerful technique employed to estimate missing or unobserved data points in a spatial dataset. The capabilities of Random Forest algorithms, which are ensemble learning methods based on decision trees. The characteristic features of RF make it well-suited for geospatial interpolation tasks. RF can effectively handle non-linear relationships and interactions between spatial coordinates (longitude and latitude) and the target variable, such as air quality measurements. It can capture complex spatial patterns and dependencies, including spatial discontinuities and irregularities. RF interpolation can handle missing data and outliers, providing robustness to the interpolation process. Additionally, RF allows for quantifying the importance of spatial coordinates, enabling the identification of key spatial predictors. By utilizing an ensemble of decision trees and exploiting the strengths of RF, geospatial interpolation can generate accurate and spatially continuous estimates of the target variable across the study area.")
+st.title("Random Forest")
 
 st.write("RF is an ensemble learning method that combines multiple decision trees to make predictions. In the context of geospatial interpolation, RF utilizes the spatial coordinates (longitude and latitude) and the observed data from stations to predict the values at unsampled locations.")
 st.write("The RF model is trained on the available data, with each tree learning different spatial patterns and relationships between the spatial coordinates and the target variable. The trained RF model can then be applied to interpolate the target variable at unsampled locations by considering the spatial characteristics captured by the ensemble of trees.")
 st.write("RF interpolation offers several advantages, including the ability to handle complex non-linear relationships, capture spatial dependencies, and provide variable importance measures. It is particularly effective when there are complex spatial patterns and interactions among the variables. However, RF interpolation requires careful tuning of parameters and consideration of potential overfitting. Overall, RF-based geospatial interpolation provides a robust and flexible approach for estimating missing values and generating continuous spatial surfaces of the target variable.")
+st.markdown("---")
 import wget
 
 
