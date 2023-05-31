@@ -331,7 +331,7 @@ predn_list_rf = []
 
 
 test_time_=pd.DataFrame()
-test_time_ = X_test[X_test['Date'] == selected_date].reset_index(drop=True, inplace=True)
+test_time_ = X_test[X_test['Date'] == selected_date].reset_index()
      
 #st.write(test_time_['PM2.5'])
 
