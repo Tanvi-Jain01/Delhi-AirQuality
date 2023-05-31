@@ -23,7 +23,7 @@ st.title("Geo Spatial Interpolation")
 
 st.markdown("---")
 
-
+import wget
 # Load the NetCDF file into an xarray dataset
 #ds = xr.open_dataset(r'C:\Users\Harshit Jain\Desktop\delhiaq\delhi_cpcb_2022.nc')
 #print(type(ds))
