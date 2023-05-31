@@ -25,11 +25,18 @@ st.markdown("---")
 
 
 # Load the NetCDF file into an xarray dataset
-ds = xr.open_dataset(r'C:\Users\Harshit Jain\Desktop\delhiaq\delhi_cpcb_2022.nc')
+#ds = xr.open_dataset(r'C:\Users\Harshit Jain\Desktop\delhiaq\delhi_cpcb_2022.nc')
 #print(type(ds))
 
-df = ds.to_dataframe().reset_index()
+
+dataset_url = "https://github.com/patel-zeel/delhi_aq/raw/main/data/delhi_cpcb_2022.nc"
+dataset_file = wget.download(dataset_url)
+
+# Read the NetCDF file
+ds = xr.open_dataset(dataset_file)
 #print(df)
+
+df = ds.to_dataframe().reset_index()
 #-----------------------------------------------------------------------
 
 #PREPROCESSING
