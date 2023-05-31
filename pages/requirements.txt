@@ -32,3 +32,4 @@ metpy==1.5.0
 git+https://github.com/SomePackage#egg=SomePackage
 metpy
 scipy
+pygwalker
