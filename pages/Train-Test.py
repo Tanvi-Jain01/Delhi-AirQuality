@@ -24,7 +24,7 @@ st.title("Geo Spatial Interpolation")
 
 st.markdown("---")
 
-
+import wget
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
