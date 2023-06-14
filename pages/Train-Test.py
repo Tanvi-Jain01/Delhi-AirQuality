@@ -28,7 +28,11 @@ st.markdown("---")
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-ds = xr.open_dataset(r'https://github.com/Tanvi-Jain01/Delhi-AirQuality-/blob/main/Streamlit/daily_data.nc')
+ds=dataset_url = "https://github.com/Tanvi-Jain01/Delhi-AirQuality-/blob/main/Streamlit/daily_data.nc"
+dataset_file = wget.download(dataset_url)
+
+# Read the NetCDF file
+ds = xr.open_dataset(dataset_file)
 df = ds.to_dataframe().reset_index()
 #----------------------------------------------------------------------------------
 
