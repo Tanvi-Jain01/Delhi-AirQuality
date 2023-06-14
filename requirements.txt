@@ -17,6 +17,7 @@ scikit-learn
 matplotlib
 numpy
 xarray
+pandas
 altair
 dask
 netcdf4
