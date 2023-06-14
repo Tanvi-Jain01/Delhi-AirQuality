@@ -37,7 +37,7 @@ st.markdown("---")
 import wget
 
 # Download dataset file from GitHub
-dataset_url = "https://github.com/patel-zeel/delhi_aq/blob/main/delhi_aq/processed_data/delhi_cpcb_2022_cleaned.nc"
+dataset_url = "https://github.com/patel-zeel/delhi_aq/blob/main/data/air_quality/delhi_cpcb_2022.nc"
 dataset_file = wget.download(dataset_url)
 
 # Read the NetCDF file
