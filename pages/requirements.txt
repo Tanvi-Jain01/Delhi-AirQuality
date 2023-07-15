@@ -20,6 +20,8 @@ xarray
 altair
 dask
 netcdf4
+requests
+io
 h5netcdf
 plotly
 wget
